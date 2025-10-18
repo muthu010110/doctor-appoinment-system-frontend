@@ -1,0 +1,137 @@
+.appointment-container {
+  background: linear-gradient(180deg, #e8fff5 0%, #f9fffc 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px;
+
+  .appointment-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 550px;
+    padding: 40px 45px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px rgba(0, 168, 107, 0.15);
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 28px;
+      color: #023b2d;
+      font-weight: 700;
+      margin-bottom: 25px;
+      position: relative;
+
+      &::after {
+        content: "";
+        display: block;
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, #00a86b, #2ecc71);
+        margin: 10px auto 0;
+        border-radius: 5px;
+      }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        label {
+          font-size: 15px;
+          font-weight: 600;
+          color: #065f46;
+        }
+
+        input,
+        select,
+        textarea {
+          padding: 12px 14px;
+          font-size: 15px;
+          border: 1px solid #d1fae5;
+          border-radius: 10px;
+          outline: none;
+          background: #f9fffc;
+          transition: all 0.3s ease;
+
+          &:focus {
+            border-color: #00a86b;
+            box-shadow: 0 0 6px rgba(0, 168, 107, 0.25);
+            background: #ffffff;
+          }
+        }
+
+        textarea {
+          resize: none;
+          min-height: 90px;
+        }
+      }
+
+      .row {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+
+        .form-group {
+          flex: 1;
+        }
+      }
+
+      .book-btn {
+        background: linear-gradient(90deg, #00a86b, #2ecc71);
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 168, 107, 0.3);
+
+        &:hover {
+          background: #02925f;
+          transform: translateY(-2px);
+        }
+
+        &:active {
+          transform: scale(0.98);
+        }
+      }
+
+      .message {
+        text-align: center;
+        font-size: 14px;
+        color: #e11d48;
+        margin-top: 5px;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .appointment-card {
+      padding: 30px 25px;
+    }
+
+    form .row {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .book-btn {
+      font-size: 15px;
+    }
+  }
+}
