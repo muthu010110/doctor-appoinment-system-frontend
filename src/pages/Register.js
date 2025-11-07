@@ -40,9 +40,7 @@ const handleregister=async(e)=>{
       toast.success("register succesfull")
       navigate("/login");
     }
-    else{
-      setMessage(data.message|| "registeration faild");
-    }
+   
   }
     catch(error){
       setMessage(error.message);
@@ -57,7 +55,7 @@ const handleregister=async(e)=>{
  
       <div className="register-left">
         <form className="register-form" onSubmit={handleregister}>
-          <h2 className="form-title">Create Your MediBook Account 🩺</h2>
+          <h2 className="form-title">Create Your MediBook Account </h2>
 
           <div className="form-group">
             <input
@@ -120,7 +118,6 @@ const handleregister=async(e)=>{
         </form>
       </div>
 
-      {/* RIGHT SIDE - IMAGE / GRAPHIC */}
       <div className="register-right">
         <div className="graphic-circle"></div>
         <img

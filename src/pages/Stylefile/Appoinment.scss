@@ -1,3 +1,49 @@
+/* ✅ Solid White Toast Style for DoctorCare */
+.Toastify__toast {
+  background: #ffffff !important;  /* fully opaque white */
+  color: #023b2d !important;       /* dark text */
+  border-radius: 10px !important;
+  font-weight: 500;
+  font-size: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  border-left: 5px solid #00a86b !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;           /* removes fade look */
+}
+
+/* success */
+.Toastify__toast--success {
+  border-left-color: #00a86b !important;
+}
+
+/* error */
+.Toastify__toast--error {
+  border-left-color: #ef4444 !important;
+}
+
+/* info */
+.Toastify__toast--info {
+  border-left-color: #0ea5e9 !important;
+}
+
+/* toast body */
+.Toastify__toast-body {
+  padding: 10px !important;
+  color: #023b2d !important;
+  opacity: 1 !important;
+}
+
+/* progress bar */
+.Toastify__progress-bar {
+  background: #00a86b !important;
+}
+
+/* make sure container is visible on any background */
+.Toastify__toast-container {
+  z-index: 9999 !important;
+}
+
 .appointment-container {
   background: linear-gradient(180deg, #e8fff5 0%, #f9fffc 100%);
   min-height: 100vh;
@@ -5,6 +51,7 @@
   justify-content: center;
   align-items: center;
   padding: 80px 20px;
+
 
   .appointment-card {
     background: #ffffff;

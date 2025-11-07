@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,15 +6,23 @@ import "./Navbar.scss";
 
 function Navbar() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const [user, setUser] = useState(null);
+
+  // ✅ Load user from sessionStorage on component mount
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("auth");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const handleLogout = () => {
-   localStorage.removeItem("user");
+    sessionStorage.clear(); // remove user + token
     toast.success("Logged out successfully!");
     navigate("/login");
- 
   };
+
+  const isLoggedIn = !!user;
 
   return (
     <nav className="navbar">
@@ -26,20 +34,17 @@ function Navbar() {
         <ul className="navbar-links">
           <li><a href="#home">Home</a></li>
           <li><a href="#footer">Contact</a></li>
-          
 
-          {isLoggedIn && (
+          {isLoggedIn ? (
             <>
-              <li>Welcome, {user?.name||"User"}</li>
+              <li className="welcome-text">Welcome, {user?.name || "User"} 👋</li>
               <li>
                 <button className="logout-btn" onClick={handleLogout}>
                   Logout
                 </button>
               </li>
             </>
-          )}
-
-          {!isLoggedIn && (
+          ) : (
             <>
               <li><Link to="/login">Login</Link></li>
               <li><Link to="/register" className="register-btn">Register</Link></li>

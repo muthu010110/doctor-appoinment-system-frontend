@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import Home from "./Home"
 import BoodAppoinment from './BoodAppoinment'
 import Footer from '../components/Footer'
+import Chatbot from './Chatbot'
 
 
 function Patientdashboard() {
@@ -11,6 +12,7 @@ function Patientdashboard() {
         <Navbar/>
         <Home/>
         <BoodAppoinment/>
+        <Chatbot/>
         <Footer/>
         
         

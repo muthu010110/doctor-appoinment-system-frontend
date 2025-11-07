@@ -9,7 +9,7 @@ function Footer() {
 
     
         <div className="footer-section">
-          <h3 className="footer-logo">MediBook 🩺</h3>
+          <h3 className="footer-logo">DoctorCare </h3>
           <p className="footer-text">
             Your trusted online doctor appointment system for better healthcare.
           </p>
