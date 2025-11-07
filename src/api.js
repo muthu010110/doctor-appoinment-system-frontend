@@ -1,31 +1,31 @@
-// src/api.js
+// src/http.js
 const API_BASE = process.env.REACT_APP_API_BASE;
 
-if (!API_BASE) {
-  // See value in browser console after deploy
-  // eslint-disable-next-line no-console
-  console.warn("REACT_APP_API_BASE is missing");
-}
-
-export async function getJSON(path, options = {}) {
+export async function request(path, { method = "GET", body, headers = {} } = {}) {
   const res = await fetch(`${API_BASE}${path}`, {
+    method,
     credentials: "include",
-    ...options,
+    headers: { "Content-Type": "application/json", ...headers },
+    body: body ? JSON.stringify(body) : undefined,
   });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data?.message || `HTTP ${res.status}`);
-  return data;
-}
 
-export async function postJSON(path, body, options = {}) {
-  const res = await fetch(`${API_BASE}${path}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", ...(options.headers || {}) },
-    credentials: "include",
-    body: JSON.stringify(body),
-    ...options,
-  });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data?.message || `HTTP ${res.status}`);
+  const ct = res.headers.get("content-type") || "";
+  let data = null;
+
+  if (res.status !== 204) {
+    if (ct.includes("application/json")) {
+      data = await res.json().catch(() => null); // don't explode on bad JSON
+    } else {
+      data = await res.text().catch(() => "");
+    }
+  }
+
+  if (!res.ok) {
+    const msg =
+      (data && (data.message || data.error)) ||
+      `HTTP ${res.status}`;
+    throw new Error(msg);
+  }
+
   return data;
 }
