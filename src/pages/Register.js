@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Stylefile/Register.scss";
 import doctor from "./assets/doctor.png";
-import api from "./api"; // <-- add this
+import api from "../api"; // <-- add this
 
 function Register() {
   const navigate = useNavigate();
