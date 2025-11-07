@@ -1,31 +1,37 @@
-// src/http.js
-const API_BASE = process.env.REACT_APP_API_BASE;
+import axios from "axios";
 
-export async function request(path, { method = "GET", body, headers = {} } = {}) {
-  const res = await fetch(`${API_BASE}${path}`, {
-    method,
-    credentials: "include",
-    headers: { "Content-Type": "application/json", ...headers },
-    body: body ? JSON.stringify(body) : undefined,
-  });
+const baseURL = process.env.REACT_APP_API_BASE;
 
-  const ct = res.headers.get("content-type") || "";
-  let data = null;
+// show in console (for debug only)
+console.log("API Base:", baseURL || "⚠️ Missing REACT_APP_API_BASE");
 
-  if (res.status !== 204) {
-    if (ct.includes("application/json")) {
-      data = await res.json().catch(() => null); // don't explode on bad JSON
+// create axios instance
+export const api = axios.create({
+  baseURL,
+  withCredentials: true, // keep if backend sets cookies or sessions
+  headers: { "Content-Type": "application/json" },
+});
+
+// response interceptor – handles empty responses safely
+api.interceptors.response.use(
+  (response) => {
+    // if backend sends no JSON, just return the whole response
+    if (!response.data && response.status === 204) return {};
+    return response;
+  },
+  (error) => {
+    if (error.response) {
+      // backend responded with 4xx/5xx
+      const msg =
+        error.response.data?.message ||
+        error.response.data?.error ||
+        `HTTP ${error.response.status}`;
+      return Promise.reject(new Error(msg));
+    } else if (error.request) {
+      // request made but no response (network/CORS)
+      return Promise.reject(new Error("Network Error – check CORS or backend"));
     } else {
-      data = await res.text().catch(() => "");
+      return Promise.reject(error);
     }
   }
-
-  if (!res.ok) {
-    const msg =
-      (data && (data.message || data.error)) ||
-      `HTTP ${res.status}`;
-    throw new Error(msg);
-  }
-
-  return data;
-}
+);
