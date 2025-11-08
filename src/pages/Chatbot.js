@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { MessageCircle, Send, X } from "lucide-react";
 import "./Stylefile/Chatbot.scss";
-
+import api from "../api"
 function Chatbot() {
   const [isOpen, setisOpen] = useState(false);
   const [message, setMessage] = useState([
@@ -21,7 +21,7 @@ function Chatbot() {
     setinput("");
 
     try {
-      const response = await axios.post("http://localhost:8080/api/ai/chat", {
+      const response = await api.post("/api/ai/chat", {
         message: input,
       });
 

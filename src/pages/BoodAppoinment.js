@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Stylefile/Appoinment.scss";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import api from "../api"
 function BookAppointment() {
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ function BookAppointment() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/doctor");
+        const res = await api.get("/api/doctor");
         setDoctors(res.data || []);
       } catch (err) {
         console.error("Error loading doctors:", err);
@@ -111,7 +111,7 @@ function BookAppointment() {
     };
 
     try {
-      const response = await axios.post("http://localhost:8080/api/appointment", payload);
+      const response = await api.post("/api/appointment", payload);
       if (response.status === 200 || response.status === 201) {
         toast.success("Appointment booked successfully! Check your email for confirmation.");
         setformdata({

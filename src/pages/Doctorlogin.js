@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import "./Stylefile/DoctorLogin.scss"
+import api from "../api"
 function Doctorlogin() {
   const navigate = useNavigate();
   const [formdata, setformdata] = useState({
@@ -20,7 +21,7 @@ function Doctorlogin() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:8080/api/doctor/doctorLogin", formdata); // update your API URL
+      const response = await api.post("/api/doctor/doctorLogin", formdata); // update your API URL
       const data = response.data;
 
       localStorage.setItem("user", JSON.stringify(data));

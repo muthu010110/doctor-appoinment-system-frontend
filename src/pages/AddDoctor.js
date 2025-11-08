@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import './Stylefile/AddDoctor.scss';
-
+import api from "../api"
 const SPECIALIZATIONS = [
   "General Medicine",
   "General Surgery",
@@ -43,7 +43,7 @@ function AddDoctor() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/doctor/addDoctor", formdata);
+      await api.post("/api/doctor/addDoctor", formdata);
       toast.success("Doctor details added successfully!");
       setformdata({ name: "", specialization: "", email: "", password: "" });
     } catch (error) {

@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Stylefile/Login.scss";
 import axios from "axios";
+import api from "../api"
 
 function Login() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:8080/api/auth/login", formData);
+      const res = await api.post("/api/auth/login", formData);
       const data = res.data;
 
       if (!data || !data.id) throw new Error("Invalid response");

@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from "../components/Doctornavbar";
 // import Sidebar from "./Sidebar";
 // import "./Dashboard.scss";
-
+import api from "../api"
 function DoctorDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [appointments, setAppointments] = useState([]);
@@ -13,8 +13,8 @@ function DoctorDashboard() {
 
   useEffect(() => {
     if (doctorEmail) {
-      axios
-        .get(`http://localhost:8080/api/appointments/doctor/${doctorEmail}`)
+      api
+        .get(`/api/appointments/doctor/${doctorEmail}`)
         .then((res) => setAppointments(res.data))
         .catch((err) => console.error(err));
     }
