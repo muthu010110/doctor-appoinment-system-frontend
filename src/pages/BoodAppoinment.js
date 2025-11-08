@@ -84,49 +84,60 @@ function BookAppointment() {
     const { name, value } = e.target;
     setformdata((prev) => ({ ...prev, [name]: value }));
   };
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    // ---- session check (sessionStorage, not localStorage)
-    const raw = sessionStorage.getItem("auth");
-    if (!raw) {
-      toast.error("Please login to book an appointment!");
-      setTimeout(() => navigate("/login"), 900);
-      return;
-    }
-    const auth = JSON.parse(raw);
-    const email = auth?.email;
-    if (!email) {
-      toast.error("Login session invalid. Please login again.");
-      sessionStorage.clear();
-      setTimeout(() => navigate("/login"), 900);
-      return;
-    }
+  const raw = sessionStorage.getItem("auth");
+  if (!raw) {
+    toast.error("Please login to book an appointment!");
+    setTimeout(() => navigate("/login"), 900);
+    return;
+  }
+  const auth = JSON.parse(raw);
+  if (!auth?.id) {
+    toast.error("Login session invalid. Please login again.");
+    sessionStorage.clear();
+    setTimeout(() => navigate("/login"), 900);
+    return;
+  }
 
-    // payload aligned to backend
-    const payload = {
-      ...formdata,
-      email, // from session
-    };
-
-    try {
-      const response = await api.post("/api/appointment", payload);
-      if (response.status === 200 || response.status === 201) {
-        toast.success("Appointment booked successfully! Check your email for confirmation.");
-        setformdata({
-          name: "",
-          doctorId: "",
-          date: toDateInput(new Date()),
-          time: toTimeInput(nextWholeHour(new Date())),
-          note: "",
-        });
-      }
-    } catch (error) {
-      console.error("Error booking appointment:", error);
-      toast.error(error?.response?.data?.message || "Failed to book appointment!");
-    }
+  // 👇 transform to what backend expects
+  const startTime = `${formdata.date}T${formdata.time}`;        // "YYYY-MM-DDTHH:mm"
+ const payload = {
+    email: auth.email,                              // String
+    name: formdata.name.trim(),                     // String
+    doctorId: Number(formdata.doctorId),            // Integer
+    date: formdata.date,                            // "YYYY-MM-DD"
+    time: formdata.time,                            // "HH:mm"
+    note: formdata.note?.trim() || "General",       // String
   };
+
+  try {
+    const response = await api.post("/api/appointment", payload, {
+      headers: { "Content-Type": "application/json" },
+    });
+    if (response.status === 200 || response.status === 201) {
+      toast.success("Appointment booked successfully!");
+      setformdata({
+        name: "",
+        doctorId: "",
+        date: toDateInput(new Date()),
+        time: toTimeInput(nextWholeHour(new Date())),
+        note: "",
+      });
+    }
+  } catch (error) {
+    const msg =
+      error?.response?.data?.message ||
+      JSON.stringify(error?.response?.data || {}) ||
+      "Failed to book appointment!";
+    console.error("Booking error:", error?.response || error);
+    toast.error(msg);
+  }
+};
+
+
+  
 
   return (
     <div id="appoinment" className="appointment-container">
