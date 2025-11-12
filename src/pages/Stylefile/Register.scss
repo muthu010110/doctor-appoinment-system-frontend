@@ -11,11 +11,10 @@
     align-items: center;
     justify-content: space-between;
     background: #ffffff;
-    border-radius: 24px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    border-radius: 1.5rem;
+    box-shadow: 0 0.625rem 2.5rem rgba(0, 0, 0, 0.08);
     overflow: hidden;
     width: 100%;
-    max-width: 1000px;
     transition: all 0.3s ease;
   }
 
@@ -25,7 +24,7 @@
     padding: 3rem 2.5rem;
 
     .register-form {
-      max-width: 400px;
+      max-width: 25rem; /* ~400px */
       margin: 0 auto;
 
       .form-title {
@@ -41,9 +40,9 @@
 
         input {
           width: 100%;
-          padding: 0.85rem 1rem;
-          border: 1.5px solid #d1e7dd;
-          border-radius: 10px;
+          padding: 0.85rem 0.1rem;
+          border: 0.094rem solid #d1e7dd; /* ~1.5px */
+          border-radius: 0.625rem;
           font-size: 1rem;
           outline: none;
           transition: 0.3s ease;
@@ -54,7 +53,7 @@
 
           &:focus {
             border-color: #198754;
-            box-shadow: 0 0 8px rgba(25, 135, 84, 0.2);
+            box-shadow: 0 0 0.5rem rgba(25, 135, 84, 0.2);
           }
         }
       }
@@ -63,7 +62,7 @@
         width: 100%;
         padding: 0.9rem;
         border: none;
-        border-radius: 10px;
+        border-radius: 0.625rem;
         background: linear-gradient(135deg, #00a86b, #2ecc71);
         color: #fff;
         font-size: 1.1rem;
@@ -73,7 +72,7 @@
 
         &:hover {
           background: linear-gradient(135deg, #01925e, #27ae60);
-          transform: translateY(-2px);
+          transform: translateY(-0.125rem);
         }
       }
 
@@ -117,8 +116,8 @@
 
     .graphic-circle {
       position: absolute;
-      width: 300px;
-      height: 300px;
+      width: 12.5rem; /* capped at 200px */
+      height: 12.5rem; /* capped at 200px */
       border-radius: 50%;
       background: rgba(0, 168, 107, 0.15);
       top: 50%;
@@ -130,16 +129,17 @@
       position: relative;
       z-index: 2;
       width: 80%;
-      max-width: 350px;
+      max-width: 12.5rem; /* capped at 200px */
       height: auto;
     }
   }
 
   // RESPONSIVE DESIGN
-  @media (max-width: 850px) {
+  @media (max-width: 53.125rem) { /* ~850px */
     .register-container {
       flex-direction: column-reverse;
-      max-width: 500px;
+      max-width: 31.25rem; /* ~500px */
+      align-items: stretch;
     }
 
     .register-right {
@@ -149,6 +149,24 @@
     .register-left {
       width: 100%;
       padding: 2rem;
+    }
+  }
+
+  /* small screens tweak: tighter paddings */
+  @media (max-width: 30rem) { /* ~480px */
+    padding: 1rem;
+
+    .register-left {
+      padding: 1.2rem;
+    }
+
+    .register-form .form-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .register-form {
+      max-width: 100%;
     }
   }
 }
